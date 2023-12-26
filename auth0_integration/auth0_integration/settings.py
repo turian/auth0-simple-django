@@ -1,10 +1,10 @@
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,7 +21,7 @@ SESSION_COOKIE_NAME = "auth0_simple_django_session"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost"] # , "yourdomain.com"]  # Add your domain for production
+ALLOWED_HOSTS = ["localhost"]  # , "yourdomain.com"]  # Add your domain for production
 
 
 # Application definition
@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "auth0_auth"
+    "auth0_auth",
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,7 @@ AUTHLIB_OAUTH_CLIENTS = {
         "api_base_url": os.getenv("AUTH0_BASE_URL"),
         "access_token_url": os.getenv("AUTH0_BASE_URL") + "/oauth/token",
         "authorize_url": os.getenv("AUTH0_BASE_URL") + "/authorize",
-        #"userinfo_url": os.getenv("AUTH0_BASE_URL") + "/userinfo",
+        # "userinfo_url": os.getenv("AUTH0_BASE_URL") + "/userinfo",
         "redirect_uri": "http://localhost:8863/callback",  # Change the port as needed
         "jwks_uri": os.getenv("AUTH0_BASE_URL") + "/.well-known/jwks.json",
         "client_kwargs": {
