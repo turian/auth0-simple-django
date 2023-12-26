@@ -81,8 +81,4 @@ def logout(request):
 
 
 def home(request):
-    if "profile" in request.session:
-        logging.debug(os.environ)
-        return redirect("dashboard")
-    else:
-        return redirect("login")
+    return redirect("dashboard")

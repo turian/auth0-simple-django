@@ -26,6 +26,9 @@ ALLOWED_HOSTS = ["localhost"]  # , "yourdomain.com"]  # Add your domain for prod
 # TODO: Switch to accounts/login/
 LOGIN_URL = "login"  # Use the name of your custom login view
 
+# TODO: Add this and use this instead of Users in views.py
+#AUTH_USER_MODEL = 'myapp.CustomUser'  # Replace 'myapp' with the actual name of your app and 'CustomUser' with your custom user model
+
 # Application definition
 
 INSTALLED_APPS = [
