@@ -23,6 +23,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost"]  # , "yourdomain.com"]  # Add your domain for production
 
+# TODO: Switch to accounts/login/
+LOGIN_URL = "login"  # Use the name of your custom login view
 
 # Application definition
 

@@ -4,6 +4,9 @@ from urllib.parse import urlencode
 
 from authlib.integrations.django_client import OAuth
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login as django_login
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
@@ -32,6 +35,19 @@ def callback_handling(request):
 
         userinfo = token["userinfo"]
 
+        # Manually authenticate the user based on Auth0 information
+        User = get_user_model()
+        user, created = User.objects.get_or_create(username=userinfo["email"])
+        logging.debug(f"User: {user}, created: {created}")
+
+        if created:
+            # You can populate additional user fields here if needed
+            pass
+
+        # Log the user in using Django's authentication system
+        r = django_login(request, user)
+        logging.debug(f"django_login: {r}")
+
         request.session["profile"] = {
             "user_id": userinfo["sub"],
             "name": userinfo["name"],
@@ -46,15 +62,13 @@ def callback_handling(request):
         return HttpResponse(str(e))
 
 
+@login_required
 def dashboard(request):
-    if "profile" in request.session:
-        return HttpResponse(
-            f'Your email: {request.session["profile"].get("name")} '
-            f'<br><img src="{request.session["profile"].get("picture")}">'
-            '<br><a href="/logout">Logout</a>'
-        )
-    else:
-        return redirect("login")
+    return HttpResponse(
+        f'Your email: {request.session["profile"].get("name")} '
+        f'<br><img src="{request.session["profile"].get("picture")}">'
+        '<br><a href="/logout">Logout</a>'
+    )
 
 
 def logout(request):
